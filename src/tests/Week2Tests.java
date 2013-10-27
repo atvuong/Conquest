@@ -6,13 +6,21 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import code.Conquest;
+import code.Department;
+import code.Player;
+import code.School;
+import code.Student;
 
 public class Week2Tests {
 	
+	/*
 	@Before //things to be done before every test
 	public void setup() {
 		Conquest tester = new Conquest();
-	}
+	}*/
+	
+	/// --- got rid of @Before and @After here - we can either have a Conquest constructor that doesn't take in a parameter and gets players after
+	/// OR have it take in a parameter and add the names first but cannot call addPlayers on empty constructor
 
 	@Test //test for adding only 3 players
 	public void test1() {
@@ -115,39 +123,59 @@ public class Week2Tests {
 	
 	@Test //test adjacencies of one dept in sciences
 	public void test15() {
-		fail("IMPLEMENT ME");
+		LinkedList<Department> expected = new LinkedList<Department>();
+		expected.add(Anesthesia);
+		expected.add(Biology);
+		expected.add(Physics);
+		expected.add(Mathematics);
+		assertTrue("", Chemistry.getAdjacencies().equals(expected));
 	}
 	
 	@Test //test adjacencies of one dept in humanities
 	public void test16() {
-		fail("Not yet implemented");
+		LinkedList<Department> expected = new LinkedList<Department>();
+		expected.add(History);
+		expected.add(Literature);
+		expected.add(Religion);
+		expected.add(Computer);
+		assertTrue("", Linguistics.getAdjacencies().equals(expected));
 	}
 	
 	@Test //test adjacencies of one dept in arts
 	public void test17() {
+		LinkedList<Department> expected = new LinkedList<Department>();
+		expected.add(Anesthesia);
+		expected.add(Biology);
+		expected.add(Physics);
+		expected.add(Mathematics);
+		assertTrue("", Chemistry.getAdjacencies().equals(expected));
+	}
+	
+	@Test //test adjacencies of one dept in engineering
+	public void test18() {
 		String[] expected = new String["Dance", "Physics", "Theatre", "Visual Arts"];
 		String[] actual = tester.getAdjacencies("Music");
 		assertTrue("Expected the following adjacencies for Music Dept: " + expected + ", but got these adjacencies: " + actual, actual.toString().equals(expected.toString());
 	}
 	
-	@Test //test adjacencies of one dept in engineering
-	public void test18() {
-		fail("Not yet implemented");
-	}
-	
 	@Test //test adjacencies of one dept in law
 	public void test19() {
-		fail("Not yet implemented");
+		String[] expected = new String["Business", "Family", "Immigration", "Pathology"];
+		String[] actual = tester.getAdjacencies("Criminal");
+		assertTrue("Expected the following adjacencies for Music Dept: " + expected + ", but got these adjacencies: " + actual, actual.toString().equals(expected.toString());
 	}
 	
 	@Test ////test adjacencies of one dept in medicine
 	public void test20() {
-		fail("Not yet implemented");
+		String[] expected = new String["Otolaryngology", "Pathology", "Pediatrics", "Chemistry"];
+		String[] actual = tester.getAdjacencies("Anesthesia");
+		assertTrue("Expected the following adjacencies for Music Dept: " + expected + ", but got these adjacencies: " + actual, actual.toString().equals(expected.toString());
 	}
 	
+	/*
 	@After
 	public void teardown(){
 		
-	}
+	}*/
 	
 }

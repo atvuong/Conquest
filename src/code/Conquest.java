@@ -55,7 +55,9 @@ public class Conquest {
 			
 		}//end of main
 		
-		Conquest(int _nP){
+		public Conquest(int _nP){//for tests - cannot create same constructor
+			//for each test without putting in the @param int _nP - have to change param 
+			//or create new instance of conquest within each test
 			_numPlayers = _nP;
 			_numSchools = 2;
 			_numDepartments = 4;
