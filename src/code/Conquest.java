@@ -16,14 +16,21 @@ public class Conquest {
 	HashMap<School, Player> deanRecords = new HashMap<School, Player>();
 	static String[] _playerNames = new String[20]; //should this be static? 
 	
-		public static void main(String[] args) {
-			Scanner in = new Scanner(System.in);
-			System.out.println("Enter name of player 1: ");
-			_playerNames[0] = in.nextLine();
-			System.out.println("Enter name of player 2: ");
-			_playerNames[1] = in.nextLine();
-			String morePlayers = "junk";
-			int counter = 3;
+		public void addPlayers(String[] names) { //should be main
+//			Scanner in = new Scanner(System.in);
+//			System.out.println("Enter name of player 1: ");
+//			_playerNames[0] = in.nextLine();
+//			System.out.println("Enter name of player 2: ");
+//			_playerNames[1] = in.nextLine();
+//			String morePlayers = "junk";
+			_playerNames = names;
+			if(names.length > 20) {
+				throw new IllegalArgumentException();
+			}
+			else if(names.length < 2) {
+				throw new IllegalArgumentException();
+			}
+/*			int counter = 3;
 			while (counter < 20) {
 				System.out.println("Add more players? Y or N");
 				morePlayers = in.nextLine();
@@ -36,7 +43,8 @@ public class Conquest {
 				else if(morePlayers.compareToIgnoreCase("n") == 1) {
 					counter -= 1;
 					break;
-				}
+				}*/
+				
 			}
 			//FIGURE OUT TURNS AND ITERATORS
 			Conquest gameDriver = new Conquest(counter);
