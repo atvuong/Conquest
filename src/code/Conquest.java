@@ -10,19 +10,14 @@ public class Conquest {
 	int _numSchools;
 	int _numDepartments;
 	int _numStudents;
+	int countPlayers;
 	static LinkedList<Player> livePlayers;
 	boolean _univHasPresident;
 	HashMap<Department, Player> chairRecords = new HashMap<Department, Player>();
 	HashMap<School, Player> deanRecords = new HashMap<School, Player>();
 	static String[] _playerNames = new String[20]; //should this be static? 
 	
-		public void addPlayers(String[] names) { //should be main
-//			Scanner in = new Scanner(System.in);
-//			System.out.println("Enter name of player 1: ");
-//			_playerNames[0] = in.nextLine();
-//			System.out.println("Enter name of player 2: ");
-//			_playerNames[1] = in.nextLine();
-//			String morePlayers = "junk";
+		public void addPlayers(String[] names) { //should be GUI
 			_playerNames = names;
 			if(names.length > 20) {
 				throw new IllegalArgumentException();
@@ -30,20 +25,7 @@ public class Conquest {
 			else if(names.length < 2) {
 				throw new IllegalArgumentException();
 			}
-/*			int counter = 3;
-			while (counter < 20) {
-				System.out.println("Add more players? Y or N");
-				morePlayers = in.nextLine();
-				if (morePlayers.compareToIgnoreCase("y") == 1) {
-					System.out.println("Enter name of player " + counter);
-					//check later that input doesn't already exist!!!!!
-					_playerNames[counter - 1] = in.nextLine();
-					counter += 1;
-				}
-				else if(morePlayers.compareToIgnoreCase("n") == 1) {
-					counter -= 1;
-					break;
-				}*/
+
 				
 			}
 			//FIGURE OUT TURNS AND ITERATORS
@@ -55,17 +37,32 @@ public class Conquest {
 			
 		}//end of main
 		
-		public Conquest(int _nP){//for tests - cannot create same constructor
-			//for each test without putting in the @param int _nP - have to change param 
-			//or create new instance of conquest within each test
-			_numPlayers = _nP;
+		
+//Conquest Task List: 1. Add second constructor. First constructor will be called automatically and handle depts and schools ONLY!
+//Second constructor is called AFTER addPLayers has been called as much as needed and countPlayers is accurate. This second constructor
+//will instantiate 
+
+public Conquest(){
 			_numSchools = 2;
 			_numDepartments = 4;
-			_numStudents = _numPlayers * 3;
 			_univHasPresident = false;
 			livePlayers = new LinkedList<Player>();
+			//addPlayer will add players one at a time to String array, makePlayers will use finished String array to construct Player objects
 		}
 	
+		public int addPlayer(int count, String name){//GUI calls this method
+			if((name == null) || (name == "")){
+				throw new IllegalArgumentException("Name cannot be null or blank");
+			}
+			for(int i = 0; i<count; i++){
+				if (name.equals(_playerNames[i])){
+					throw new IllegalArgumentException("Name already exists");
+			}
+			_playerNames[count] = name;
+			count = count + 1;
+			return count;
+		}
+		
 		public LinkedList<Player> getPlayers(){
 			return livePlayers;
 		}
@@ -85,130 +82,15 @@ public class Conquest {
 		public int getNumDepartments(){
 			return _numDepartments;
 		}
-}
-	/* class Player{
-		//player variables:
-		String _playerName;
-		LinkedList<Department> _chairOf;
-		LinkedList<School> _deanOf;
-		boolean _president;
-		int _loyalStudents;
 		
-		Player(){
-			LinkedList<Department> _chairOf = new LinkedList<Department>();
-			LinkedList<School> _deanOf = new LinkedList<School>();
-			boolean _president = false;
-			int _loyalStudents = 0;
-		}
-		
-		public boolean setName(String n) {
-			_playerName = n;
-			return true;
-		}
-		
-		public String getName() {
-			return _playerName;
-		}
-		
-		public boolean addDept(Department d) {
-			_chairOf.add(d);
-			return true;
-		}
-		
-		public LinkedList<Department> getDepts() {
-			return _chairOf;
-		}
-		
-		public boolean addSchool(School s) {
-			_deanOf.add(s);
-			return true;
-		}
-		
-		public LinkedList<School> getSchools() {
-			return _deanOf;
-		}
-		
-		public boolean changeStudents(int i) {
-			_loyalStudents += i;
-			return true;
-		}
-		
-		public int getStudents() {
-			return _loyalStudents;
-		}
-		
-		public boolean makePresident() {
-			if ((_deanOf.size() == _numSchools) && (_chairOf.size() == _numDepartments)){
-				_president = true;
-				_univHasPresident = true;
+		public makePlayers() {
+			for (int i = 0; i < _playerNames.length; i ++) {
+				Player tempPlayer = new Player(this, _playerNames[i]);
+				livePlayers.add(tempPlayer);
 			}
-			return _president;
 		}
-		
-		
-		
-	}//end player
-	
-	class School{
-		//school variables
-		Department[] _deptList;
-		String _schoolName;
-		
-		School(int numDept, String name){
-			_deptList = new Department[numDept];
-			_schoolName = name;
-		}
-		
-		public String getSchoolName() {
-			return _schoolName;
-		}
-		
-		public Department[] getDepts() {
-			return _deptList;
-		}
-	}//end school
-	
-	class Department{
-		String _deptName;
-		LinkedList<Student> _deptStudents;
-	}//end department
-	
-	class Student{
-		Player _studentLoyalty;
-		Department _studentDept;
-		
-		Student(Player p, Department d) {
-			_studentLoyalty = p;
-			_studentDept = d;
-		}
-		
-		public boolean changeLoyalty(Player newLoyalty){
-			_studentLoyalty = newLoyalty;
-			return true;
-		}
-		
-		public boolean changeLocation(Department newLoc){
-			_studentDept = newLoc;
-			return true;
-		}
-		
-		public Player getLoyalty(){
-			return _studentLoyalty;
-		}
-		
-		public Department getStudentDept(){
-			return _studentDept;
-		}
-		
-		public Player getVote(Player one, Player two){
-			//issues: check that parameter's players include this student's loyalty?
-			//
-			return one;
-		}
-	}//end student
-	/*
-	
-}//end conquest
+}
+
 
 /* 
 Things to consider:
